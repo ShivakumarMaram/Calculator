@@ -103,6 +103,13 @@
         .paren:hover {
             background-color: #00b894;
         }
+        .cancel {
+            background-color: #e17055;
+            color: white;
+        }
+        .cancel:hover {
+            background-color: #c0392b;
+        }
     </style>
 </head>
 <body>
@@ -110,6 +117,7 @@
         <input type="text" id="display" readonly value="0">
         <div class="buttons">
             <button class="clear" onclick="clearDisplay()">C</button>
+            <button class="cancel" onclick="cancelLast()">←</button>
             <button class="paren" onclick="appendToDisplay('(')">(</button>
             <button class="paren" onclick="appendToDisplay(')')">)</button>
             <button class="operator" onclick="appendToDisplay('%')">%</button>
@@ -151,6 +159,17 @@
             display.value = currentInput;
         }
 
+        function cancelLast() {
+            if (currentInput === 'Error') {
+                currentInput = '0';
+            } else if (currentInput.length > 1) {
+                currentInput = currentInput.slice(0, -1);
+            } else {
+                currentInput = '0';
+            }
+            display.value = currentInput;
+        }
+
         function calculate() {
             try {
                 const expression = currentInput.replace(/%/g, '/100');
@@ -183,6 +202,8 @@
                 calculate(); // Equals
             } else if (key === 'Escape') {
                 clearDisplay(); // Clear
+            } else if (key === 'Backspace') {
+                cancelLast(); // Cancel last character
             }
         });
     </script>
