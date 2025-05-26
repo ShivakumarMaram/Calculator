@@ -166,6 +166,25 @@
                 setTimeout(clearDisplay, 1000);
             }
         }
+
+        // Add keyboard event listener
+        document.addEventListener('keydown', (event) => {
+            const key = event.key;
+            if (/^[0-9]$/.test(key)) {
+                appendToDisplay(key); // Numbers 0-9
+            } else if (key === '.') {
+                appendToDisplay('.'); // Decimal point
+            } else if (['+', '-', '*', '/', '%'].includes(key)) {
+                appendToDisplay(key); // Operators
+            } else if (key === '(' || key === ')') {
+                appendToDisplay(key); // Parentheses
+            } else if (key === 'Enter') {
+                event.preventDefault(); // Prevent form submission if in a form
+                calculate(); // Equals
+            } else if (key === 'Escape') {
+                clearDisplay(); // Clear
+            }
+        });
     </script>
 </body>
 </html>
